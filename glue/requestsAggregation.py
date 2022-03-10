@@ -7,9 +7,10 @@ from awsglue.utils import getResolvedOptions
 
 args = getResolvedOptions(sys.argv,
                           ["JOB_NAME",
-                           "bucket"])
+                           "bucket",
+                           "table_name"])
 bucket = args["bucket"]
-table_name = "Requests"
+table_name = args["table_name"]
 read_percentage = "0.2"
 output_location = f's3://{bucket}/requests-aggregated'
 
