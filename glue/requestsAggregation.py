@@ -10,7 +10,7 @@ args = getResolvedOptions(sys.argv,
                            "bucket"])
 bucket = args["bucket"]
 table_name = "Requests"
-read_percentage = "0.5"
+read_percentage = "0.2"
 output_location = f's3://{bucket}/requests-aggregated'
 
 sc = SparkContext()
