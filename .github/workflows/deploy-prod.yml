@@ -1,0 +1,27 @@
+name: Deploy Glue script (prod)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - glue/**
+  workflow_dispatch:
+
+env:
+  AWS_REGION: eu-central-1
+  SCRIPT: requestsAggregation.py
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${AWS_REGION}
+          aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+      - name: upload to S3
+        run: aws s3 cp ./${SCRIPT} s3://${{ secrets.PROD_S3_BUCKET }}
+        working-directory: glue
