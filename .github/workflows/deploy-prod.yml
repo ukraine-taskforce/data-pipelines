@@ -16,12 +16,13 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: ${AWS_REGION}
+          aws-region: ${{ env.AWS_REGION }}
           aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
       - name: upload to S3
         run: aws s3 cp ./${SCRIPT} s3://${{ secrets.PROD_S3_BUCKET }}
-        working-directory: glue
+        working-directory: ./glue
